@@ -27,7 +27,7 @@ export class PieChartComponent implements OnInit {
     const alldata = data;
 
     const countTag = {};
-    console.log(countTag)
+    console.log(countTag);
 
     for (const x of alldata) {
       for (const tagName of x.tags) {
@@ -39,6 +39,7 @@ export class PieChartComponent implements OnInit {
       }
     }
 
+    // tslint:disable-next-line: forin
     for (const key in countTag) {
       this.pieChartLabels.push(key);
       const numPics = countTag[key];
