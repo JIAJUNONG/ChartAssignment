@@ -15,59 +15,7 @@ export class LineChartComponent implements OnInit {
   public lineChartType = 'line';
   public lineChartColors: Color[] = [
 
-    { // red
-      backgroundColor: 'rgba(255,0,0,0.3)',
-      borderColor: 'red',
-      pointBackgroundColor: 'rgba(148,159,177,1)',
-      pointBorderColor: '#fff',
-      pointHoverBackgroundColor: '#fff',
-      pointHoverBorderColor: 'rgba(148,159,177,0.8)'
-    }
   ];
-  public lineChartOptions: (ChartOptions & { annotation: any }) = {
-    responsive: true,
-    scales: {
-      // We use this empty structure as a placeholder for dynamic theming.
-      xAxes: [{}],
-      yAxes: [
-        {
-          id: 'y-axis-0',
-          position: 'left',
-        },
-        {
-          id: 'y-axis-1',
-          position: 'right',
-          gridLines: {
-            color: 'rgba(255,0,0,0.3)',
-          },
-          ticks: {
-            fontColor: 'red',
-          }
-        }
-      ]
-    },
-    annotation: {
-      annotations: [
-        {
-          type: 'line',
-          mode: 'vertical',
-          scaleID: 'x-axis-0',
-          value: 'March',
-          borderColor: 'orange',
-          borderWidth: 2,
-          label: {
-            enabled: true,
-            fontColor: 'orange',
-            content: 'LineAnno'
-          }
-        },
-      ],
-    },
-  };
-
-  
-
-
 
 
   constructor() { }
@@ -78,34 +26,27 @@ export class LineChartComponent implements OnInit {
 
     for (const allrecord of sourceData) {
       const getmonth = new Date(allrecord.dateAdded).getMonth() + 1;
-      // const numberCount = allrecord.id
-          if (tempDataStore[getmonth]) {
+      if (tempDataStore[getmonth]) {
             tempDataStore[getmonth] += 1;
-          } else {
-            tempDataStore[getmonth] = 1;
-          }
-
+            } else {
+              tempDataStore[getmonth] = 0;
+              tempDataStore[getmonth] += 1;
+              }
     }
 
-    const tagCount = {};
+    console.log(tempDataStore);
 
-    for (const month in tempDataStore) {
-      console.log(month)
-      this.lineChartLabels.push(month);
-      for (const tag in tempDataStore[month]) {
-        if (tagCount[tag]) {
-          tagCount[tag].push(tempDataStore[month])
-        } else {
-          tagCount[tag] = [tempDataStore[month]]
-        }
-      }
-    }
+    this.lineChartLabels = Object.keys(tempDataStore);
 
-    for (const tag in tagCount){
+    console.log(this.lineChartLabels);
+
+    // tslint:disable-next-line: forin
+    for (const num in tempDataStore) {
       this.lineChartData.push(
-        {data: tagCount[tag], label: tag}
-      )
+        {data: tempDataStore[num], label: 'Number Of Pic'}
+      );
     }
+    console.log(this.lineChartData)
   }
 
 }

@@ -39,25 +39,27 @@ export class BarChartComponent implements OnInit {
 
     const tagCount = {};
 
+    // tslint:disable-next-line: forin
     for (const month in tempDataStore) {
-      console.log(month)
+      console.log(month);
       this.barChartLabels.push(month);
       for (const tag in tempDataStore[month]) {
         if (tagCount[tag]) {
-          tagCount[tag].push(tempDataStore[month][tag])
+          tagCount[tag].push(tempDataStore[month][tag]);
         } else {
-          tagCount[tag] = [tempDataStore[month][tag]]
+          tagCount[tag] = [tempDataStore[month][tag]];
         }
       }
     }
 
-    for (const tag in tagCount){
+    // tslint:disable-next-line: forin
+    for (const tag in tagCount) {
       this.barChartData.push(
         {data: tagCount[tag], label: tag}
-      )
+      );
     }
 
-    
+
   }
 
 }
